@@ -16,6 +16,10 @@ def detect(prompt: str):
 
     prompt = prompt.lower()
 
+    # ----------------------------
+    # User Info
+    # ----------------------------
+
     if any(word in prompt for word in [
         "username",
         "nickname",
@@ -27,6 +31,10 @@ def detect(prompt: str):
     ]):
         return Intent.USER_INFO
 
+    # ----------------------------
+    # Server Info
+    # ----------------------------
+
     if any(word in prompt for word in [
         "server",
         "guild",
@@ -35,12 +43,20 @@ def detect(prompt: str):
     ]):
         return Intent.SERVER_INFO
 
+    # ----------------------------
+    # Channel Info
+    # ----------------------------
+
     if any(word in prompt for word in [
         "channel",
         "topic",
         "slowmode"
     ]):
         return Intent.CHANNEL_INFO
+
+    # ----------------------------
+    # Bot Info
+    # ----------------------------
 
     if any(word in prompt for word in [
         "your name",
@@ -50,6 +66,37 @@ def detect(prompt: str):
     ]):
         return Intent.BOT_INFO
 
+    # ----------------------------
+    # Conversation
+    # ----------------------------
+
+    if any(word in prompt for word in [
+        "previous messages",
+        "earlier",
+        "history",
+        "last time",
+        "remember our conversation"
+    ]):
+        return Intent.CONVERSATION
+
+    # ----------------------------
+    # Memory
+    # ----------------------------
+
+    if any(word in prompt for word in [
+        "remember",
+        "forget",
+        "what's my",
+        "what is my",
+        "tell me my",
+        "do you remember"
+    ]):
+        return Intent.MEMORY
+
+    # ----------------------------
+    # Moderation
+    # ----------------------------
+
     if any(word in prompt for word in [
         "kick",
         "ban",
@@ -58,10 +105,8 @@ def detect(prompt: str):
     ]):
         return Intent.MODERATION
 
-    if any(word in prompt for word in [
-        "remember",
-        "forget"
-    ]):
-        return Intent.MEMORY
+    # ----------------------------
+    # Default
+    # ----------------------------
 
-    return None
+    return Intent.AI_CHAT

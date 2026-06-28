@@ -32,6 +32,8 @@ async def main():
         await bot.load_extension("cogs.moderation")
         await bot.load_extension("cogs.ai")
         logger.info("General Cog loaded, Moderation Cog oaded, Ai Cog loaded.")
+        from services.memory_service import initialize
+        initialize()
         await bot.start(DISCORD_TOKEN)
 
 
