@@ -12,6 +12,8 @@ from services.memory_service import (
 )
 from services.memory_parser import parse_memory
 
+from tools.tool_manager import handle_tool
+
 
 async def execute(intent, ctx, prompt):
 
@@ -71,7 +73,10 @@ async def execute(intent, ctx, prompt):
                     value=memory["value"]
                 )
 
-                return f"Got it! I'll remember your {memory['key'].replace('_', ' ')}."
+                return (
+                    f"Got it! I'll remember your "
+                    f"{memory['key'].replace('_', ' ')}."
+                )
 
             return "I couldn't understand what to remember."
 
@@ -136,6 +141,19 @@ async def execute(intent, ctx, prompt):
             return f"Done! I forgot your favorite {thing}."
 
         return "I couldn't understand the memory request."
+
+    # --------------------------------------------------
+    # Tools
+    # --------------------------------------------------
+
+    elif intent == Intent.TOOL:
+
+        result = handle_tool(prompt)
+
+        if result is not None:
+            return result
+
+        return "No suitable tool found."
 
     # --------------------------------------------------
     # Moderation

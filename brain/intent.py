@@ -10,6 +10,7 @@ class Intent(Enum):
     MEMORY = "MEMORY"
     MODERATION = "MODERATION"
     AI_CHAT = "AI_CHAT"
+    TOOL = "TOOL"
 
 
 def detect(prompt: str):
@@ -104,7 +105,55 @@ def detect(prompt: str):
         "timeout"
     ]):
         return Intent.MODERATION
+    
 
+# ----------------------------
+# Tool Detection
+# ----------------------------
+    import re
+    math_patterns = [
+
+    r"^\s*[0-9+\-*/().\s]+\s*$",
+
+    r"what('?s| is)?\s+[0-9+\-*/().\s?]+$",
+
+    r"calculate\s+[0-9+\-*/().\s]+",
+
+    r"solve\s+[0-9+\-*/().\s]+"
+
+]
+    if any(
+    re.fullmatch(pattern, prompt)
+    for pattern in math_patterns
+):
+        return Intent.TOOL
+    
+    tool_patterns = [
+
+    "generate uuid",
+    "generate a uuid",
+    "create uuid",
+    "create a uuid",
+
+    "flip a coin",
+
+    "roll a d",
+    "roll d",
+
+    "random number",
+
+    "what time is it",
+    "current time",
+
+    "what's today's date",
+    "what is today's date",
+    "today's date"
+
+]
+
+    if any(pattern in prompt for pattern in tool_patterns):
+        return Intent.TOOL
+    
     # ----------------------------
     # Default
     # ----------------------------
