@@ -1,242 +1,273 @@
-# 🤖 Monday
+🤖 Monday
 
-> **An AI assistant that thinks before it speaks.**
+An AI-powered Discord assistant that thinks before it speaks.
 
-Monday is a modular AI-powered Discord assistant built around a **Brain → Planner → Skills** architecture instead of sending every request directly to an LLM.
+Monday is a modular Discord AI assistant built around a Brain → Planner → Skills architecture. Instead of sending every request directly to a language model, Monday analyzes the user's intent, selects the appropriate skill or tool, gathers context when needed, and only uses AI when it's the best solution.
 
-It understands user intent, routes requests to specialized services, remembers recent conversations through Retrieval-Augmented Generation (RAG), and automatically switches between multiple AI providers when one becomes unavailable.
+Designed with scalability in mind, Monday combines AI conversation, Discord server intelligence, moderation, memory, and internet tools into one extensible assistant.
 
----
+✨ Features
+🧠 AI Brain
+Intent-based request routing
+Brain → Planner → Skills architecture
+AI-assisted conversations
+Context-aware responses
+Modular skill system
+🤖 Multi-Provider AI
 
-# ✨ Features
+Supported providers:
 
-## 🧠 Intelligent Brain
+Google Gemini
+OpenRouter
+Groq
 
-* Intent-based request routing
-* AI-assisted intent classification
-* Central planner for task execution
-* Modular architecture for future expansion
+Features:
 
-## 💬 Conversation Awareness
+Automatic provider failover
+Configurable provider priority
+Unified AI interface
+Easy provider expansion
+💬 Conversation Intelligence
+Reads recent Discord conversations
+Context-aware replies
+Conversation history (RAG)
+Chat summarization
+🧠 Long-Term Memory
 
-* Reads recent Discord conversations
-* Builds conversation context
-* Answers questions using recent chat history (RAG)
-* Conversation summarization
+Monday can remember user preferences.
 
-## 🤖 Multi-Provider AI
+Examples:
 
-* Google Gemini
-* Groq
-* OpenRouter
+Remember that my favorite IDE is VS Code.
 
-Features include:
+What's my favorite IDE?
 
-* Automatic provider failover
-* Configurable provider priority
-* Unified AI interface
+Forget my favorite IDE.
+🌐 Internet Tools
 
-## 👤 Discord Knowledge
+Built-in tools include:
 
-Monday understands Discord itself.
+Wikipedia
+Weather
+GitHub Repository Search
+Web Search
+Calculator
+UUID Generator
+Date & Time
 
-Current supported knowledge includes:
+Tools are only used when appropriate—general knowledge questions still go to the AI.
 
-* User information
-* Server information
-* Channel information
-* Bot information
-
-## ⚙️ Architecture
-
-Designed around independent services instead of one large bot file.
-
-```
+👤 Discord Intelligence
 User
+Username
+Nickname
+Avatar
+Roles
+User ID
+Join Date
+Account Creation
+Boost Status
+Server
+Member Count
+Owner
+Roles
+Statistics
+Channel
+Topic
+Slowmode
+Pinned Messages
+Analytics
+Most Active Members
+Chat Activity
+Conversation Summary
+🛡️ Moderation
 
-    │
+AI-powered moderation commands:
 
-    ▼
+Kick
+Ban
+Timeout
+Unban
+Purge
+Warnings
 
- Monday Brain
+Includes:
 
-    │
+Permission validation
+Role hierarchy protection
+Moderation logging
+📝 Logging
+Console logging
+Daily log files
+Configurable Discord log channel
+Moderation action logging
 
-Intent Detection
+⚙️ Architecture
+                    User
 
-    │
+                      │
 
-    ▼
+                      ▼
 
- Planner
+                Monday Brain
 
-    │
+                      │
 
- ┌───────────────┬────────────────┬──────────────┐
- │               │                │
- ▼               ▼                ▼
+               Intent Detection
 
-Discord      Conversation      AI Chat
- Skills           RAG
+                      │
 
-        │
+                      ▼
 
-        ▼
+                  Planner
 
-     AI Manager
+        ┌────────┬─────────┬──────────┬──────────┐
+        │        │         │          │
+        ▼        ▼         ▼          ▼
 
- ┌──────────┬──────────┬──────────────┐
- │          │          │
- ▼          ▼          ▼
+   Discord     Memory     Tools      AI
 
-Gemini     Groq    OpenRouter
-```
+        │                    │
 
----
+        ▼                    ▼
 
-# 📂 Project Structure
+   Discord API         AI Providers
 
-```
+                  ┌─────────┬─────────┬─────────┐
+                  │         │         │
+                  ▼         ▼         ▼
+
+               Gemini     Groq   OpenRouter
+
+
+📂 Project Structure
 Monday/
 
 ├── brain/
-│   ├── brain.py
-│   ├── planner.py
-│   └── intent.py
-│
 ├── cogs/
-│
 ├── providers/
-│
 ├── services/
-│
 ├── skills/
-│
+│   ├── discord/
+│   └── moderation/
+├── tools/
+│   └── internet/
 ├── utils/
-│
-├── config.py
+
 ├── MondayMain.py
+├── config.py
 ├── requirements.txt
 ├── .env.example
 └── README.md
-```
 
----
 
-# 🚀 Installation
+🚀 Installation
+Clone the repository
 
-Clone the repository:
-
-```bash
 git clone https://github.com/dev-aj-5/Monday.git
-```
 
-Move into the project:
+Move into the project
 
-```bash
 cd Monday
-```
 
-Install dependencies:
+Install dependencies
 
-```bash
 pip install -r requirements.txt
-```
 
-Create a `.env` file using `.env.example` and add your own API keys:
+Create a .env file:
 
-```
 DISCORD_TOKEN=
 
 GEMINI_API_KEY=
 
+OPENROUTER_API_KEY=
+
 GROQ_API_KEY=
 
-OPENROUTER_API_KEY=
-```
+Run Monday
 
-Run the bot:
-
-```bash
 python MondayMain.py
-```
 
----
+💬 Example Commands
+AI
+!ask Hello Monday
 
-# ⚙️ Configuration
+!ask Explain quantum computing
+Memory
+!ask Remember that my favorite IDE is VS Code
 
-Provider priority can be configured inside `config.py`.
+!ask What's my favorite IDE?
 
-Example:
+!ask Forget my favorite IDE.
+Discord
+!ask What's my avatar?
 
-```python
-AI_PROVIDER_ORDER = [
-    "gemini",
-    "groq",
-    "openrouter"
-]
-```
+!ask Who owns this server?
 
-Changing the order automatically changes which provider Monday prefers.
+!ask Who talks the most?
+Moderation
+!ask Kick @User
 
----
+!ask Timeout @User
 
-# 🛣️ Roadmap
+!ask Warn @User Spamming
 
-## ✅ Completed
+!ask Purge 10
+Internet
+!ask Weather in London
 
-* Brain Architecture
-* Planner
-* Intent Detection
-* AI Provider Manager
-* Automatic AI Failover
-* Discord Knowledge Skills
-* Conversation RAG
-* Asynchronous Architecture
-* GitHub Ready Configuration
+!ask Wikipedia Python
 
-## 🚧 In Progress
+!ask GitHub discord.py
 
-* Long-Term Memory
-* Tool Calling
-* Web Search
-* Mention Mode
-* Multi-step Planning
+!ask Generate UUID
+🛠 Tech Stack
+Python 3.14
+discord.py
+Google Gemini API
+Groq API
+OpenRouter API
+SQLite
+Requests
+python-dotenv
+🛣 Roadmap
+✅ Version 1.0
+Brain Architecture
+Planner
+Intent Detection
+Multi-provider AI
+Conversation Context
+Memory
+Discord Skills
+Moderation System
+Internet Tools
+Logging
+Guild Settings
+🚀 Version 2.0
+Web Dashboard
+Discord OAuth2
+Docker Support
+24/7 Cloud Hosting
+Auto Moderation
+Plugin System
+Web UI
+Slash Commands
+🤝 Contributing
 
----
+Contributions, suggestions, and improvements are welcome.
 
-# 🛠️ Tech Stack
+Feel free to fork the project, open an issue, or submit a pull request.
 
-* Python 3.14
-* discord.py
-* Google Gemini API
-* Groq API
-* OpenRouter API
-* python-dotenv
-* Requests
-
----
-
-# 🤝 Contributing
-
-Contributions, suggestions, and improvements are always welcome.
-
-If you'd like to improve Monday, feel free to fork the repository and open a pull request.
-
----
-
-# 📜 License
+📜 License
 
 This project is licensed under the MIT License.
 
----
-
-# 💡 Philosophy
+💡 Philosophy
 
 Most Discord AI bots simply forward prompts to a language model.
 
-Monday takes a different approach.
+Monday follows a different philosophy.
 
-Every request first passes through a **Brain**, which understands the user's intent, selects the appropriate skill or service, gathers any required context, and only then asks an AI model when necessary.
+Every request first passes through a Brain, which determines the user's intent, chooses the appropriate skill or tool, gathers any required context, and only consults an AI model when necessary.
 
-The goal is to build an assistant that doesn't just generate responses—but **thinks before it speaks**.
+The goal is to build an assistant that is intent-driven, modular, and extensible—one that doesn't just generate responses, but makes informed decisions before responding.
