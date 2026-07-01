@@ -136,7 +136,7 @@ Examples:
         inline=False
     )
 
-        embed.set_footer(text="Monday v0.8")
+        embed.set_footer(text="Monday v0.9")
 
         await ctx.send(embed=embed)
 

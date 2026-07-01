@@ -1,7 +1,7 @@
 from brain.intent import detect
 from brain.planner import execute
 from services.intent_service import classify
-
+from services.logger_service import info
 
 class MondayBrain:
 
@@ -12,6 +12,6 @@ class MondayBrain:
         if intent is None:
             intent = classify(prompt)
 
-        print(f"[Brain] Intent: {intent.name}")
+        info(f"[Brain] Intent: {intent.name}")
 
         return await execute(intent, ctx, prompt)

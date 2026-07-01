@@ -161,16 +161,19 @@ async def execute(intent, ctx, prompt):
 
     elif intent == Intent.MODERATION:
 
-        return "Moderation service hasn't been built yet."
+        answer = await discord_handle(ctx, prompt)
+
+        if answer is not None:
+            return answer
+
+        return "I couldn't determine the moderation action."
 
     # --------------------------------------------------
     # Default AI Chat
     # --------------------------------------------------
 
     else:
-
         context = build_context(ctx)
-
         return ask_ai(
             context,
             prompt

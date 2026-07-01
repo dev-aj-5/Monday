@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BOT_NAME = "Monday"
-BOT_VERSION = "0.4.0"
+BOT_VERSION = "0.9"
 
 # AI Providers (Priority Order)
 AI_PROVIDER_ORDER = [

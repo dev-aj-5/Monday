@@ -1,5 +1,7 @@
 from enum import Enum
 
+from click import prompt
+
 
 class Intent(Enum):
     USER_INFO = "USER_INFO"
@@ -37,11 +39,35 @@ def detect(prompt: str):
     # ----------------------------
 
     if any(word in prompt for word in [
-        "server",
-        "guild",
-        "owner",
-        "member count"
-    ]):
+    "server",
+    "guild",
+    "owner",
+    "member count",
+
+    # Analytics
+    "most active",
+    "who talked the most",
+    "most messages",
+    "active members",
+    "chat summary",
+    "summarize chat",
+    "summarize today's chat",
+    "server activity" ,
+    "summarize",
+    "summary",
+    "summarize today's chat",
+    "summarize this chat",
+    "pinned",
+    "pins",
+    "pinned messages",
+    "create poll",
+    "poll",
+    "vote",
+    "create text channel",
+    "create voice channel",
+    "lock channel",
+    "unlock channel"
+]):
         return Intent.SERVER_INFO
 
     # ----------------------------
@@ -99,11 +125,20 @@ def detect(prompt: str):
     # ----------------------------
 
     if any(word in prompt for word in [
-        "kick",
-        "ban",
-        "mute",
-        "timeout"
-    ]):
+
+    "kick",
+    "ban",
+    "timeout",
+    "mute",
+    "unban",
+    "purge",
+    "clear messages",
+    "warn",
+    "warnings",
+    "clear warnings",
+    "set log channel",
+
+]):
         return Intent.MODERATION
     
 
@@ -147,12 +182,30 @@ def detect(prompt: str):
 
     "what's today's date",
     "what is today's date",
-    "today's date"
+    "today's date" 
 
 ]
 
-    if any(pattern in prompt for pattern in tool_patterns):
-        return Intent.TOOL
+    internet_patterns = [
+
+    "wiki",
+    "wikipedia",
+
+    "github",
+    "repository",
+    "repo",
+
+    "weather",
+    "forecast",
+
+    "search"
+
+]
+    
+    all_patterns = tool_patterns + internet_patterns
+
+    if any(pattern in prompt for pattern in all_patterns):
+     return Intent.TOOL
     
     # ----------------------------
     # Default

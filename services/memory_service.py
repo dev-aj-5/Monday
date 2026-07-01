@@ -1,14 +1,6 @@
 import sqlite3
 from pathlib import Path
-
-# --------------------------------------------------
-# Database Location
-# --------------------------------------------------
-
-DB_PATH = Path("data") / "memory.db"
-
-DB_PATH.parent.mkdir(exist_ok=True)
-
+from services.database import get_connection
 
 # --------------------------------------------------
 # Initialize Database
@@ -16,7 +8,7 @@ DB_PATH.parent.mkdir(exist_ok=True)
 
 def initialize():
 
-    connection = sqlite3.connect(DB_PATH)
+    connection = get_connection()
 
     cursor = connection.cursor()
 
@@ -52,7 +44,7 @@ CREATE TABLE IF NOT EXISTS memories (
 
 def remember(user_id, category, key, value):
 
-    connection = sqlite3.connect(DB_PATH)
+    connection = get_connection()
 
     cursor = connection.cursor()
 
@@ -92,7 +84,7 @@ def remember(user_id, category, key, value):
 
 def recall(user_id, key):
 
-    connection = sqlite3.connect(DB_PATH)
+    connection = get_connection()
 
     cursor = connection.cursor()
 
@@ -131,7 +123,7 @@ def recall(user_id, key):
 
 def forget(user_id, key):
 
-    connection = sqlite3.connect(DB_PATH)
+    connection = get_connection()
 
     cursor = connection.cursor()
 
@@ -161,7 +153,7 @@ def forget(user_id, key):
 
 def list_memories(user_id):
 
-    connection = sqlite3.connect(DB_PATH)
+    connection = get_connection()
 
     cursor = connection.cursor()
 

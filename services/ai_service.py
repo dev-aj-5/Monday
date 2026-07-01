@@ -5,8 +5,8 @@ from providers import openrouter
 from providers import groq
 
 from brain.personality import SYSTEM_PROMPT
-
-
+from services.logger import info
+from services.logger import error
 # ==========================================
 # Provider Dictionary
 # ==========================================
@@ -50,19 +50,19 @@ USER MESSAGE
             continue
 
         try:
-            print(f"[AI] Trying provider: {provider_name}")
+            info(f"[AI] Trying provider: {provider_name}")
 
             response = provider.generate_response(full_prompt)
 
-            print(f"[AI] Success using: {provider_name}")
+            info(f"[AI] Success using: {provider_name}")
 
             return response
 
         except Exception as e:
 
-            print(f"[AI] {provider_name} failed.")
+            error(f"[AI] {provider_name} failed.")
 
-            print(e)
+            error(f"[AI] Error: {e}")
 
             last_error = e
 

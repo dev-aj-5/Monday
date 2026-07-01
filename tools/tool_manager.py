@@ -1,11 +1,13 @@
 import re
 
+from click import prompt
+
 from tools.calculator import evaluate
 from tools.time import get_time
 from tools.date import get_date
 from tools.random import handle_random
 from tools.uuid_tool import generate_uuid
-
+from tools.internet.internet_manager import handle_internet
 
 def handle_tool(prompt):
 
@@ -67,3 +69,15 @@ def handle_tool(prompt):
         except Exception:
 
             return "I couldn't calculate that." 
+        
+# ----------------------------
+# Internet Services
+# ----------------------------
+
+    internet_result = handle_internet(prompt)
+
+    if internet_result is not None:
+        return internet_result
+
+
+    return None
