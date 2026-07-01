@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 import random
-from utils.logger import logger
+from services.logger import info
 
 class General(commands.Cog):
     def __init__(self, bot):

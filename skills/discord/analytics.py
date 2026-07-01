@@ -14,6 +14,8 @@ async def handle(ctx, prompt: str):
         "most active" in prompt
         or "who talked the most" in prompt
         or "most messages" in prompt
+        or "who sent the most messages" in prompt
+        or "who talks the most" in prompt
     ):
 
         counter = Counter()

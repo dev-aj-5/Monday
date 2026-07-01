@@ -10,7 +10,6 @@ async def log(
     description,
     color=discord.Color.blurple()
 ):
-
     channel_id = get_setting(
         guild_id,
         "log_channel"
@@ -34,5 +33,4 @@ async def log(
         description=description,
         color=color
     )
-
     await channel.send(embed=embed)

@@ -1,7 +1,7 @@
 from brain.intent import detect
 from brain.planner import execute
 from services.intent_service import classify
-from services.logger_service import info
+from services.logger import info
 
 class MondayBrain:
 

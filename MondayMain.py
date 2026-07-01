@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
-from utils.logger import logger
+from services.logger import info
 from config import DISCORD_TOKEN
 from services.warning_service import initialize as initialize_warnings
 from services.guild_service import (
@@ -34,17 +34,17 @@ async def on_ready():
 
 @bot.event
 async def on_command(ctx):
-    logger.info(
+    info(
         f"{ctx.author} executed {ctx.message.content} in #{ctx.channel}"
     )
 
 async def main():
     async with bot:
-        logger.info("Loading General Cog...")
+        info("Loading General Cog...")
         await bot.load_extension("cogs.general")
         await bot.load_extension("cogs.moderation")
         await bot.load_extension("cogs.ai")
-        logger.info("General Cog loaded, Moderation Cog oaded, Ai Cog loaded.")
+        info("General Cog loaded, Moderation Cog oaded, Ai Cog loaded.")
         from services.memory_service import initialize
         initialize()
         initialize_guilds()

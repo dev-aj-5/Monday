@@ -3,20 +3,40 @@ import re
 
 def parse_memory(prompt: str):
 
+    # Keep original capitalization for values
+    original_prompt = prompt
+
+    # Lowercase only for matching
     prompt = prompt.lower()
 
-    # Favorite X
+    # --------------------------------------------------
+    # Favorite
+    # --------------------------------------------------
 
     match = re.search(
         r"remember that my favorite (.+?) is (.+)",
-        prompt,
+        original_prompt,
         re.IGNORECASE
     )
 
     if match:
 
-        thing = match.group(1).strip()
-        value = match.group(2).strip()
+        thing = (
+            match.group(1)
+            .replace("?", "")
+            .replace(".", "")
+            .replace("!", "")
+            .strip()
+            .lower()
+        )
+
+        value = (
+            match.group(2)
+            .replace("?", "")
+            .replace(".", "")
+            .replace("!", "")
+            .strip()
+        )
 
         return {
             "category": "preferences",

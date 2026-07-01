@@ -5,7 +5,9 @@ from services.warning_service import (
     get_warnings,
     clear_warnings
 )
+
 from utils.moderation_checks import can_moderate
+
 
 async def handle(ctx, prompt):
 
@@ -16,28 +18,76 @@ async def handle(ctx, prompt):
     if member is None:
         return None
 
-    bot_member = ctx.guild.me
+    # ==================================================
+    # Clear Warnings
+    # ==================================================
 
+    if prompt_lower.startswith("clear warnings"):
+
+        error = can_moderate(
+            ctx,
+            member,
+            "moderate_members"
+        )
+
+        if error:
+            return error
+
+        clear_warnings(
+            ctx.guild.id,
+            member.id
+        )
+
+        return (
+            f"✅ Cleared all warnings for "
+            f"**{member.display_name}**."
+        )
+    
+    # ==================================================
+    # Show Warnings
+    # ==================================================
+
+    if (
+        prompt_lower.startswith("show warnings") or
+        prompt_lower.startswith("warnings")
+    ):
+
+        rows = get_warnings(
+            ctx.guild.id,
+            member.id
+        )
+
+        if not rows:
+            return f"✅ **{member.display_name}** has no warnings."
+
+        reply = f"⚠️ **Warnings for {member.display_name}**\n\n"
+
+        for i, (reason, date) in enumerate(rows, start=1):
+
+            reply += (
+                f"**{i}.** {reason}\n"
+                f"📅 {date}\n\n"
+            )
+
+        return reply
+    
     # ==================================================
     # Warn
     # ==================================================
 
-    if prompt_lower.startswith("warn"):
-
-        if not ctx.author.guild_permissions.moderate_members:
-            return "❌ You don't have permission to warn members."
-
-        if not bot_member.guild_permissions.moderate_members:
-            return "❌ I don't have permission to warn members."
+    if (
+    prompt_lower.startswith("warn ")
+    or prompt_lower == "warn"
+):
 
         error = can_moderate(
-    ctx,
-    member,
-    "moderate_members"
-)
+            ctx,
+            member,
+            "moderate_members"
+        )
 
-    if error:
-        return error
+        if error:
+            return error
 
         reason = prompt.split(member.display_name, 1)[-1].strip()
 
@@ -63,65 +113,5 @@ async def handle(ctx, prompt):
             f"They now have **{total}** warning(s)."
         )
 
-    # ==================================================
-    # Show Warnings
-    # ==================================================
-
-    if (
-        "warnings" in prompt_lower
-        or "show warnings" in prompt_lower
-    ):
-
-        rows = get_warnings(
-            ctx.guild.id,
-            member.id
-        )
-
-        if not rows:
-            return f"✅ **{member.display_name}** has no warnings."
-
-        reply = (
-            f"⚠️ **Warnings for {member.display_name}**\n\n"
-        )
-
-        for i, (reason, date) in enumerate(rows, start=1):
-
-            reply += (
-                f"**{i}.** {reason}\n"
-                f"📅 {date}\n\n"
-            )
-
-        return reply
-
-    # ==================================================
-    # Clear Warnings
-    # ==================================================
-
-    if prompt_lower.startswith("clear warnings"):
-
-        if not ctx.author.guild_permissions.moderate_members:
-            return "❌ You don't have permission to clear warnings."
-
-        if not bot_member.guild_permissions.moderate_members:
-            return "❌ I don't have permission to clear warnings."
-
-        error = can_moderate(
-    ctx,
-    member,
-    "moderate_members"
-)
-
-    if error:
-        return error
-
-        clear_warnings(
-            ctx.guild.id,
-            member.id
-        )
-
-        return (
-            f"✅ Cleared all warnings for "
-            f"**{member.display_name}**."
-        )
 
     return None

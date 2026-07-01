@@ -12,6 +12,54 @@ from skills.setup import handle as setup_handle
 async def handle(ctx, prompt: str):
 
     # ==========================
+    # Setup (highest priority)
+    # ==========================
+    response = await setup_handle(ctx, prompt)
+
+    if response is not None:
+        return response
+
+    # ==========================
+    # Moderation
+    # ==========================
+    response = await moderation_member_handle(ctx, prompt)
+
+    if response is not None:
+        return response
+
+    # ==========================
+    # Warnings
+    # ==========================
+    response = await warnings_handle(ctx, prompt)
+
+    if response is not None:
+        return response
+
+    # ==========================
+    # Channel Actions
+    # ==========================
+    response = await channel_action_handle(ctx, prompt)
+
+    if response is not None:
+        return response
+
+    # ==========================
+    # General Actions
+    # ==========================
+    response = await actions_handle(ctx, prompt)
+
+    if response is not None:
+        return response
+
+    # ==========================
+    # Analytics
+    # ==========================
+    response = await analytics_handle(ctx, prompt)
+
+    if response is not None:
+        return response
+
+    # ==========================
     # User Skill
     # ==========================
     response = await user_handle(ctx, prompt)
@@ -39,55 +87,6 @@ async def handle(ctx, prompt: str):
     # Bot Skill
     # ==========================
     response = await bot_handle(ctx, prompt)
-
-    if response is not None:
-        return response
-    
-    # ==========================
-    # Analytics Skill
-    # ==========================
-
-    answer = await analytics_handle(ctx, prompt)
-
-    if answer is not None:
-        return answer
-
-    # ==========================
-    # Actions Skill
-    # ==========================
-    response = await actions_handle(ctx, prompt)
-
-    if response is not None:
-        return response
-    
-    # ==========================
-    # Channel Actions Skill
-    # ==========================
-    response = await channel_action_handle(ctx, prompt)
-
-    if response is not None:
-        return response
-
-    # ==========================
-    # Moderation Skill
-    # ==========================
-    response = await moderation_member_handle(ctx, prompt)
-
-    if response is not None:
-        return response
-
-    # ==========================
-    # Warnings Skill
-    # ==========================
-    response = await warnings_handle(ctx, prompt)
-
-    if response is not None:
-        return response
-
-    # ==========================
-    # Setup Skill
-    # ==========================
-    response = await setup_handle(ctx, prompt)
 
     if response is not None:
         return response

@@ -1,10 +1,4 @@
-def can_moderate(ctx, member, permission):
-
-    """
-    Returns:
-        None -> moderation is allowed
-        str  -> error message
-    """
+def has_permission(ctx, permission):
 
     bot_member = ctx.guild.me
 
@@ -13,14 +7,26 @@ def can_moderate(ctx, member, permission):
     # ----------------------------
 
     if not getattr(ctx.author.guild_permissions, permission):
-        return f"❌ You don't have permission to perform this action."
+        return "❌ You don't have permission to perform this action."
 
     # ----------------------------
     # Bot Permission
     # ----------------------------
 
     if not getattr(bot_member.guild_permissions, permission):
-        return f"❌ I don't have permission to perform this action."
+        return "❌ I don't have permission to perform this action."
+
+    return None
+
+
+def can_moderate(ctx, member, permission):
+
+    error = has_permission(ctx, permission)
+
+    if error:
+        return error
+
+    bot_member = ctx.guild.me
 
     # ----------------------------
     # Self
@@ -37,7 +43,7 @@ def can_moderate(ctx, member, permission):
         return "❌ The server owner cannot be moderated."
 
     # ----------------------------
-    # Author Hierarchy
+    # User Hierarchy
     # ----------------------------
 
     if (
@@ -58,15 +64,5 @@ def can_moderate(ctx, member, permission):
             "❌ I can't moderate someone with an equal "
             "or higher role than mine."
         )
-    
-    def has_permission(ctx, permission):
-
-        bot_member = ctx.guild.me
-
-    if not getattr(ctx.author.guild_permissions, permission):
-        return "❌ You don't have permission to perform this action."
-
-    if not getattr(bot_member.guild_permissions, permission):
-        return "❌ I don't have permission to perform this action."
 
     return None

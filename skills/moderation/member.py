@@ -3,11 +3,11 @@ import discord
 
 from utils.member_resolver import get_target_member
 from utils.moderation_checks import can_moderate
+from services.logger import error
 from services.logger_service import log
 
 
 async def handle(ctx, prompt: str):
-
     prompt_lower = prompt.lower()
 
     member = get_target_member(ctx, prompt)
@@ -87,7 +87,6 @@ async def handle(ctx, prompt: str):
     # ==================================================
 
     if prompt_lower.startswith("timeout"):
-
         if member is None:
             return "❌ Member not found."
 
@@ -106,7 +105,6 @@ async def handle(ctx, prompt: str):
             until,
             reason=f"Requested by {ctx.author}"
         )
-
         await log(
             ctx.bot,
             ctx.guild.id,
@@ -119,7 +117,7 @@ async def handle(ctx, prompt: str):
             discord.Color.gold()
         )
 
-        return f"⏳ Timed out **{member.display_name}** for 10 minutes."
+        return (f"⏳ Timed out **{member.display_name}** for 10 minutes.")
 
     # ==================================================
     # Unban

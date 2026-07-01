@@ -5,14 +5,18 @@ from skills.discord_skill import handle as discord_handle
 from services.ai_service import ask_ai
 from services.context_service import build_context
 from services.conversation_service import answer_from_history
+
 from services.memory_service import (
     remember,
     recall,
     forget
 )
+
 from services.memory_parser import parse_memory
 
 from tools.tool_manager import handle_tool
+
+import re
 
 
 async def execute(intent, ctx, prompt):
@@ -36,7 +40,7 @@ async def execute(intent, ctx, prompt):
             return answer
 
     # --------------------------------------------------
-    # Conversation RAG
+    # Conversation
     # --------------------------------------------------
 
     elif intent == Intent.CONVERSATION:
@@ -89,8 +93,6 @@ async def execute(intent, ctx, prompt):
             or "what is my favorite" in prompt_lower
         ):
 
-            import re
-
             match = re.search(
                 r"favorite (.+)",
                 prompt_lower
@@ -99,7 +101,13 @@ async def execute(intent, ctx, prompt):
             if not match:
                 return "I couldn't understand what you wanted to recall."
 
-            thing = match.group(1).replace("?", "").strip()
+            thing = (
+                match.group(1)
+                .replace("?", "")
+                .replace(".", "")
+                .replace("!", "")
+                .strip()
+            )
 
             key = f"favorite_{thing.replace(' ', '_')}"
 
@@ -119,8 +127,6 @@ async def execute(intent, ctx, prompt):
 
         elif "forget my favorite" in prompt_lower:
 
-            import re
-
             match = re.search(
                 r"forget my favorite (.+)",
                 prompt_lower
@@ -129,7 +135,13 @@ async def execute(intent, ctx, prompt):
             if not match:
                 return "I couldn't understand what memory to forget."
 
-            thing = match.group(1).strip()
+            thing = (
+                match.group(1)
+                .replace("?", "")
+                .replace(".", "")
+                .replace("!", "")
+                .strip()
+            )
 
             key = f"favorite_{thing.replace(' ', '_')}"
 
@@ -173,7 +185,9 @@ async def execute(intent, ctx, prompt):
     # --------------------------------------------------
 
     else:
+
         context = build_context(ctx)
+
         return ask_ai(
             context,
             prompt
