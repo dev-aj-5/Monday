@@ -1,9 +1,9 @@
 from brain.identity import MONDAY_IDENTITY
 from brain.rules import MONDAY_RULES
 from brain.style import MONDAY_STYLE
+from version import VERSION, CODENAME, BUILD
 
-
-VERSION = "0.8"
+VERSION = VERSION
 
 # ==========================================
 # Personality Modes

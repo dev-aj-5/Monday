@@ -139,8 +139,7 @@ Examples:
         embed.set_footer(text="Monday v0.9")
 
         await ctx.send(embed=embed)
-
-
+    
 async def setup(bot):
     await bot.add_cog(General(bot))
 

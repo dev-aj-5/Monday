@@ -66,11 +66,17 @@ def initialize_services():
 
 import time
 
+from services.metrics_service import set_startup_time
+
 _start = time.perf_counter()
+
 
 def finish():
 
     elapsed = time.perf_counter() - _start
+
+    # Store startup time for metrics
+    set_startup_time(elapsed)
 
     print()
     print("=" * 55)

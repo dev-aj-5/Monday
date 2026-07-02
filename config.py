@@ -3,13 +3,16 @@
 # MONDAY BOT CONFIG
 # ===========================
 import os
+from version import VERSION, CODENAME, BUILD
 from dotenv import load_dotenv
 MODE = os.getenv("MODE", "development")
 load_dotenv()
 
 BOT_NAME = "Monday"
-BOT_VERSION = "0.9"
-
+BOT_VERSION = VERSION
+BOT_CODENAME = CODENAME
+BOT_BUILD = BUILD
+DISCORD_PREFIX = "!"
 # AI Providers (Priority Order)
 AI_PROVIDER_ORDER = [
     "gemini",

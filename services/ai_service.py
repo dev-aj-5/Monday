@@ -56,6 +56,9 @@ USER MESSAGE
 
             info(f"[AI] Success using: {provider_name}")
 
+            from services.metrics_service import record_provider
+            record_provider(provider)
+            
             return response
 
         except Exception as e:

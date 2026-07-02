@@ -2,7 +2,7 @@ import asyncio
 
 import discord
 from discord.ext import commands
-
+from config import DISCORD_PREFIX
 from config import DISCORD_TOKEN, MODE
 from version import VERSION, CODENAME
 
@@ -28,6 +28,7 @@ from services.memory_service import (
     initialize as initialize_memory
 )
 
+from services.error_handler import handle as handle_error
 # ==================================================
 # Discord Intents
 # ==================================================
@@ -40,7 +41,7 @@ intents.message_content = True
 # ==================================================
 
 bot = commands.Bot(
-    command_prefix="!",
+    command_prefix=DISCORD_PREFIX,
     intents=intents,
     help_command=None
 )
@@ -92,7 +93,17 @@ async def on_command(ctx):
         f"{ctx.message.content} "
         f"in #{ctx.channel}"
     )
+    from services.metrics_service import record_command
+    record_command(ctx.command.name)
 
+
+@bot.event
+async def on_command_error(ctx, exception):
+
+    await handle_error(
+        ctx,
+        exception
+    )
 # ==================================================
 # Startup Helpers
 # ==================================================
@@ -102,7 +113,8 @@ async def load_cogs():
     cogs = [
         "cogs.general",
         "cogs.moderation",
-        "cogs.ai"
+        "cogs.ai",
+        "cogs.health"
     ]
 
     info("Loading Cogs...")
@@ -112,6 +124,7 @@ async def load_cogs():
         await bot.load_extension(cog)
 
         info(f"✓ {cog.split('.')[-1].capitalize()}")
+        
 
     info("All cogs loaded successfully.")
 
