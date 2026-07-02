@@ -1,15 +1,43 @@
+import asyncio
+
 import discord
 from discord.ext import commands
-import asyncio
+
+from config import DISCORD_TOKEN, MODE
+from version import VERSION, CODENAME
+
 from services.logger import info
-from config import DISCORD_TOKEN
-from services.warning_service import initialize as initialize_warnings
-from services.guild_service import (
-    initialize as initialize_guilds
+
+from services.startup import (
+    banner,
+    check_environment,
+    initialize_services,
+    finish
 )
-from services.logger import info
+
+from services.guild_service import (
+    initialize as initialize_guilds,
+    create_guild
+)
+
+from services.warning_service import (
+    initialize as initialize_warnings
+)
+
+from services.memory_service import (
+    initialize as initialize_memory
+)
+
+# ==================================================
+# Discord Intents
+# ==================================================
+
 intents = discord.Intents.default()
 intents.message_content = True
+
+# ==================================================
+# Bot
+# ==================================================
 
 bot = commands.Bot(
     command_prefix="!",
@@ -17,7 +45,35 @@ bot = commands.Bot(
     help_command=None
 )
 
-from services.guild_service import create_guild
+# Prevent duplicate on_ready() execution
+_ready = False
+
+# ==================================================
+# Events
+# ==================================================
+
+@bot.event
+async def on_ready():
+
+    global _ready
+
+    if _ready:
+        return
+
+    _ready = True
+
+    finish()
+
+    total_users = sum(g.member_count or 0 for g in bot.guilds)
+
+    info("=" * 45)
+    info(f"Connected As : {bot.user}")
+    info(f"Version      : {VERSION} ({CODENAME})")
+    info(f"Mode         : {MODE}")
+    info(f"Servers      : {len(bot.guilds)}")
+    info(f"Users        : {total_users}")
+    info(f"Latency      : {round(bot.latency * 1000)} ms")
+    info("=" * 45)
 
 
 @bot.event
@@ -25,32 +81,79 @@ async def on_guild_join(guild):
 
     create_guild(guild.id)
 
-    info(f"Joined {guild.name}")
+    info(f"Joined server: {guild.name}")
 
-
-@bot.event
-async def on_ready():
-    info(f"Logged in as {bot.user}")
 
 @bot.event
 async def on_command(ctx):
+
     info(
-        f"{ctx.author} executed {ctx.message.content} in #{ctx.channel}"
+        f"{ctx.author} executed "
+        f"{ctx.message.content} "
+        f"in #{ctx.channel}"
     )
 
+# ==================================================
+# Startup Helpers
+# ==================================================
+
+async def load_cogs():
+
+    cogs = [
+        "cogs.general",
+        "cogs.moderation",
+        "cogs.ai"
+    ]
+
+    info("Loading Cogs...")
+
+    for cog in cogs:
+
+        await bot.load_extension(cog)
+
+        info(f"✓ {cog.split('.')[-1].capitalize()}")
+
+    info("All cogs loaded successfully.")
+
+
+def initialize_databases():
+
+    info("Initializing Services...")
+
+    initialize_memory()
+    info("✓ Memory")
+
+    initialize_guilds()
+    info("✓ Guild Settings")
+
+    initialize_warnings()
+    info("✓ Warnings")
+
+    info("Services initialized successfully.")
+
+# ==================================================
+# Main
+# ==================================================
+
 async def main():
+
+    banner()
+
+    check_environment()
+
+    initialize_services()
+
+    initialize_databases()
+
     async with bot:
-        info("Loading General Cog...")
-        await bot.load_extension("cogs.general")
-        await bot.load_extension("cogs.moderation")
-        await bot.load_extension("cogs.ai")
-        info("General Cog loaded, Moderation Cog oaded, Ai Cog loaded.")
-        from services.memory_service import initialize
-        initialize()
-        initialize_guilds()
-        initialize_warnings()
+
+        await load_cogs()
+
         await bot.start(DISCORD_TOKEN)
 
+# ==================================================
+# Launch
+# ==================================================
 
-asyncio.run(main())
-
+if __name__ == "__main__":
+    asyncio.run(main())

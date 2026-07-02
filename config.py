@@ -4,7 +4,7 @@
 # ===========================
 import os
 from dotenv import load_dotenv
-
+MODE = os.getenv("MODE", "development")
 load_dotenv()
 
 BOT_NAME = "Monday"
@@ -31,3 +31,12 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Discord
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+
+
+import os
+
+MODE = os.getenv("MODE", "development")
+
+DEBUG = MODE == "development"
+
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")

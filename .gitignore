@@ -1,10 +1,11 @@
 # Environment
 .env
-
+!.env.example
 # Python
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
 
 # IDE
 .vscode/
@@ -15,7 +16,9 @@ data/monday.db
 
 # Logs
 logs/
+*.log
 
 # OS
 .DS_Store
+*.db
 Thumbs.db

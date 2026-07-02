@@ -1,7 +1,4 @@
 import re
-
-from click import prompt
-
 from tools.calculator import evaluate
 from tools.time import get_time
 from tools.date import get_date
