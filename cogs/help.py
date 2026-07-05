@@ -2,7 +2,7 @@ import discord
 
 from discord.ext import commands
 
-from Data.help_data import HELP_DATA
+from data.help_data import HELP_DATA
 from version import VERSION
 
 
