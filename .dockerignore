@@ -10,10 +10,7 @@ __pycache__/
 
 logs/
 
-data/
-
-*.db
+data/*.db
 
 README.md
-
 LICENSE

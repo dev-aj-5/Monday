@@ -20,5 +20,5 @@ logs/
 
 # OS
 .DS_Store
-*.db
+data/*.db
 Thumbs.db
