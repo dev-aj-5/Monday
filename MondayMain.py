@@ -111,11 +111,15 @@ async def on_command_error(ctx, exception):
 async def load_cogs():
 
     cogs = [
-        "cogs.general",
-        "cogs.moderation",
-        "cogs.ai",
-        "cogs.health"
-    ]
+
+    "cogs.general",
+    "cogs.moderation",
+    "cogs.ai",
+    "cogs.health",
+    "cogs.help",
+    "cogs.about" , 
+    "cogs.invite",
+]
 
     info("Loading Cogs...")
 

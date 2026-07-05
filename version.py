@@ -2,9 +2,9 @@
 Monday Version Information
 """
 NAME = "Monday"
-VERSION = "1.1.0-beta"
+VERSION = "1.1.1-beta"
 CODENAME = "Public Beta"
-BUILD = 2
+BUILD = 3
 
 AUTHOR = "AriesX (dev-aj-5)"
 

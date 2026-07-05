@@ -78,68 +78,6 @@ class General(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
-    async def help(self, ctx):
-
-        embed = discord.Embed(
-            title="🤖 Monday",
-            description="An AI assistant with Discord knowledge, conversation memory and long-term memory.",
-            color=discord.Color.blurple()
-    )
-
-        embed.add_field(
-            name="💬 AI",
-            value="""
-`!ask <question>`
-Talk naturally with Monday.
-
-Examples:
-`!ask Who owns this server?`
-`!ask What's my favorite IDE?`
-`!ask Remember my favorite IDE is VS Code.`
-        """,
-        inline=False
-    )
-
-        embed.add_field(
-        name="🛠 Utility Commands",
-        value="""
-`!hello`
-`!ping`
-`!roll`
-`!say`
-`!help`
-        """,
-        inline=False
-    )
-
-        embed.add_field(
-        name="📚 Legacy Commands",
-        value="""
-`!avatar`
-`!userinfo`
-
-⚠️ These still work but will eventually be replaced by natural language through `!ask`.
-        """,
-        inline=False
-    )
-
-        embed.add_field(
-        name="🧠 Monday Features",
-        value="""
-✅ Discord Knowledge
-✅ Conversation Memory
-✅ Long-Term Memory
-✅ Multi-AI Failover
-✅ Personality Engine
-        """,
-        inline=False
-    )
-
-        embed.set_footer(text="Monday v0.9")
-
-        await ctx.send(embed=embed)
-    
 async def setup(bot):
     await bot.add_cog(General(bot))
 
