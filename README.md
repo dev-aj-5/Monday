@@ -1,4 +1,4 @@
-🤖 Monday
+Monday
 
 An AI-powered Discord assistant that thinks before it speaks.
 
@@ -6,14 +6,14 @@ Monday is a modular Discord AI assistant built around a Brain → Planner → Sk
 
 Designed with scalability in mind, Monday combines AI conversation, Discord server intelligence, moderation, memory, and internet tools into one extensible assistant.
 
-✨ Features
-🧠 AI Brain
+ Features
+ AI Brain
 Intent-based request routing
 Brain → Planner → Skills architecture
 AI-assisted conversations
 Context-aware responses
 Modular skill system
-🤖 Multi-Provider AI
+ Multi-Provider AI
 
 Supported providers:
 
@@ -27,12 +27,12 @@ Automatic provider failover
 Configurable provider priority
 Unified AI interface
 Easy provider expansion
-💬 Conversation Intelligence
+ Conversation Intelligence
 Reads recent Discord conversations
 Context-aware replies
 Conversation history (RAG)
 Chat summarization
-🧠 Long-Term Memory
+ Long-Term Memory
 
 Monday can remember user preferences.
 
@@ -43,7 +43,7 @@ Remember that my favorite IDE is VS Code.
 What's my favorite IDE?
 
 Forget my favorite IDE.
-🌐 Internet Tools
+ Internet Tools
 
 Built-in tools include:
 
@@ -57,7 +57,7 @@ Date & Time
 
 Tools are only used when appropriate—general knowledge questions still go to the AI.
 
-👤 Discord Intelligence
+ Discord Intelligence
 User
 Username
 Nickname
@@ -80,7 +80,7 @@ Analytics
 Most Active Members
 Chat Activity
 Conversation Summary
-🛡️ Moderation
+ Moderation
 
 AI-powered moderation commands:
 
@@ -96,13 +96,13 @@ Includes:
 Permission validation
 Role hierarchy protection
 Moderation logging
-📝 Logging
+ Logging
 Console logging
 Daily log files
 Configurable Discord log channel
 Moderation action logging
 
-⚙️ Architecture
+ Architecture
                     User
 
                       │
@@ -140,7 +140,7 @@ Moderation action logging
                Gemini     Groq   OpenRouter
 
 
-📂 Project Structure
+ Project Structure
 Monday/
 
 ├── brain/
@@ -161,7 +161,7 @@ Monday/
 └── README.md
 
 
-🚀 Installation
+ Installation
 Clone the repository
 
 git clone https://github.com/dev-aj-5/Monday.git
@@ -188,7 +188,7 @@ Run Monday
 
 python MondayMain.py
 
-💬 Example Commands
+ Example Commands
 AI
 !ask Hello Monday
 
@@ -221,7 +221,7 @@ Internet
 !ask GitHub discord.py
 
 !ask Generate UUID
-🛠 Tech Stack
+ Tech Stack
 Python 3.14
 discord.py
 Google Gemini API
@@ -230,8 +230,8 @@ OpenRouter API
 SQLite
 Requests
 python-dotenv
-🛣 Roadmap
-✅ Version 1.0
+ Roadmap
+ Version 1.0
 Brain Architecture
 Planner
 Intent Detection
@@ -243,7 +243,7 @@ Moderation System
 Internet Tools
 Logging
 Guild Settings
-🚀 Version 2.0
+ Version 2.0
 Web Dashboard
 Discord OAuth2
 Docker Support
@@ -252,17 +252,17 @@ Auto Moderation
 Plugin System
 Web UI
 Slash Commands
-🤝 Contributing
+ Contributing
 
 Contributions, suggestions, and improvements are welcome.
 
 Feel free to fork the project, open an issue, or submit a pull request.
 
-📜 License
+ License
 
 This project is licensed under the MIT License.
 
-💡 Philosophy
+ Philosophy
 
 Most Discord AI bots simply forward prompts to a language model.
 
